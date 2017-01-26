@@ -1,6 +1,7 @@
 package com.example.tacademy.gpsandmap;
 
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
@@ -15,7 +16,13 @@ public class GpsDetecting extends Service implements LocationListener {
     public GpsDetecting() {
         Log.i("GPS", "GpsDetecting : 생성 ");
     }
-
+    Context context;
+    int type;
+    public GpsDetecting(Context context, int type){
+        this.context = context;
+        this.type = type;
+        Log.i("GPS", "GPSDetecting : 생성 ");
+    }
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -48,7 +55,11 @@ public class GpsDetecting extends Service implements LocationListener {
     {
         Log.i("GPS","getLocation : GPS 획득시작");
         // 1. 위치 관리자 획득
-        locationManager = (LocationManager)getSystemService(LOCATION_SERVICE);
+        if (type == 3 ){
+            locationManager = (LocationManager)context.getSystemService(LOCATION_SERVICE);
+        }else{
+            locationManager = (LocationManager)getSystemService(LOCATION_SERVICE);
+        }
         // 2. 하드웨어 설정 확인
         isGPSEnable     = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
         isNetworkEnable = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);

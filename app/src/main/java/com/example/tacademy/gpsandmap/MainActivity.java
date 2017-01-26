@@ -141,6 +141,8 @@ public class MainActivity extends AppCompatActivity
             startService();
         }else if( type == 3){ // 6.0이하이므로 권한동의 없이 바로 GPS 요청
             // GPS 획득 요청
+            GpsDetecting gps = new GpsDetecting(this, type);
+            gps.initLocation();
             startService();
         }else if( type == 5){ // 6.0이상에서 거부
             // 보류
