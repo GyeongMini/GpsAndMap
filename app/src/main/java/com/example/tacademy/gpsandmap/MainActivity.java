@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
         // 2. 6.0이냐 아니냐 -> GPS 동의 여부
         // 3. 디텍팅 -> GPS (투트렙으로 체킹) -> 지오코더(GSP<->주소) -> 2초이내
         checkGpsOn();
+
     }
 
     @Override
@@ -162,6 +163,7 @@ public class MainActivity extends AppCompatActivity {
         startService(intent);
     }
 
+    boolean flag;
     // GPS 최신 갱신 내용 수신
     @Subscribe
     public void FinishLoad(Location location) {
@@ -171,6 +173,12 @@ public class MainActivity extends AppCompatActivity {
                 + location.getLongitude(), Toast.LENGTH_SHORT).show();
         // 주소 획득
         getAddress(location);
+
+        if(!flag)
+        {   flag = true;
+            Intent intent = new Intent(this, MapsActivity.class);
+            startActivity(intent);
+        }
     }
 
     // GPS를 입력받으면 주소 획득

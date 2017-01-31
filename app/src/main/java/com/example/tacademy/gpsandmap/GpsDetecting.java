@@ -157,8 +157,14 @@ public class GpsDetecting extends Service implements LocationListener {
     }
     public void sendGps()
     {
-        if( location != null)
+        if( location != null) {
+            // 나의 위치 정보를 계쏙 업데이트 해둔다.
+            U.getInstance().setMyLocation(location);
+            U.getInstance().setMyLat(location.getLatitude());
+            U.getInstance().setMyLng(location.getLongitude());
+            // 나의 위치 정보를 특정 연결된 곳으로 보낸다.
             U.getInstance().getBus().post(location);
+        }
     }
     // -------------------------------------------------------------------
     // LocationListener start
